@@ -19,7 +19,8 @@
 import Dashboard from "@material-ui/icons/Dashboard";
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 import DashboardPage from "views/Dashboard/Dashboard.js";
-import BTCPage from "views/BTC/btc.js"
+import CoinsPage from "views/market/coins.js"
+import { useParams } from "react-router-dom";
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -29,12 +30,16 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/BTC_THB",
+    path: "/:currency",
     name: "Market Price",
     icon: CurrencyBitcoinIcon,
-    component: BTCPage,
+    component: ({ match }) => {
+      const { currency } = useParams();
+      return <CoinsPage currency={currency} />;
+    },
     layout: "/market",
   },
+  
 ];
 
 export default dashboardRoutes;

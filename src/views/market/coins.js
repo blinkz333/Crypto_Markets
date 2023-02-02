@@ -5,23 +5,28 @@ import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import axios from "axios";
-
+import { useHistory, useParams } from "react-router-dom";
 
 const  Notifications = () => {
-    
+    const { currency } = useParams();
     const [coin_name , setCoinName] = useState()
     const [price , setPrice] = useState()
     const [volumn , setVolumn] = useState()
 
   useEffect(() => {
-    getCoinData("BTC")
-  });
+    getCoinData(currency)
+  },[currency]);
+
+  setInterval(() => {
+    getCoinData(currency)
+  }, 5000);
 
 
   const getCoinData  = async (coin) => {
     try{
-        const { data } = await axios.get(`https://satangcorp.com/api/v3/ticker/24hr?symbol=${coin}_thb`);
+        const { data } = await axios.get(`https://satangcorp.com/api/v3/ticker/24hr?symbol=${currency}`);
         let dollarUSLocale = Intl.NumberFormat('en-US');
+        console.log("data",dollarUSLocale.format(data.bidPrice))
        
         setCoinName(coin)
         setPrice(dollarUSLocale.format(data.bidPrice))
@@ -39,11 +44,11 @@ const  Notifications = () => {
           <GridItem xs={12} sm={12} md={4}>
             <h5>Coin</h5>
             <br />
-            <Button onClick={() => getCoinData("BTC")} color="primary">BTC/THB</Button>
+            <Button href="/market/BTC_THB" color="primary">BTC/THB</Button>
             <br/>
-            <Button onClick={() => getCoinData("BUSD")} color="primary">BUSD/THB</Button>
+            <Button href="/market/BUSD_THB" color="primary">BUSD/THB</Button>
             <br/>
-            <Button onClick={() => getCoinData("USDT")} color="primary">USDT/THB</Button>
+            <Button href="/market/USDT_THB" color="primary">USDT/THB</Button>
 
           </GridItem>
           
