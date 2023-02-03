@@ -5,7 +5,7 @@ import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import axios from "axios";
-import { useHistory, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 
 const  Notifications = () => {
     const { currency } = useParams();
